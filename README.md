@@ -1,7 +1,7 @@
 # Python-git
 
 ESEO
-
-évaluations :
- -contrôle continu  33%
- -examen final      66%
+\n
+évaluations :\n
+ -contrôle continu  33%\n
+ -examen final      66%\n
