@@ -145,9 +145,6 @@ print(mafonction(4))
 from monmodule import age
 age(18)
 
-
-
-
 from random import *
 
 nombre_coule1=randint(1, 5)
