@@ -136,3 +136,30 @@ for i in range(0, len(tri)):
             tri[j], tri[j+1]=tri[j+1],tri[j]
 print(tri)
 
+import math
+#help(math)
+
+from monmodule import mafonction
+print(mafonction(4))
+
+from monmodule import age
+age(18)
+
+
+
+
+from random import *
+
+nombre_coule1=randint(1, 5)
+nombre_coule2=randint(1, 5)
+#print(nombre_coule1, nombre_coule2)
+coule_user1=int(input("ligne"))
+coule_user2=int(input("colonne"))
+if coule_user1==nombre_coule1 and coule_user2==nombre_coule2:
+    print("coulé")
+elif coule_user1==nombre_coule1:
+    print("même ligne")
+elif coule_user2==nombre_coule2:
+    print("même colonne")
+else:
+    print("ni sur la ligne, ni sur la colone")

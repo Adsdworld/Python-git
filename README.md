@@ -1,4 +1,4 @@
-# Python-git
+Python-git by @Asdworld
 
 ESEO
 \n
