@@ -150,8 +150,10 @@ from random import *
 nombre_coule1=randint(1, 5)
 nombre_coule2=randint(1, 5)
 #print(nombre_coule1, nombre_coule2)
-coule_user1=int(input("ligne"))
-coule_user2=int(input("colonne"))
+coule_user1=int(3)
+coule_user2=int(3)
+#coule_user1=int(input("ligne"))
+#coule_user2=int(input("colonne"))
 if coule_user1==nombre_coule1 and coule_user2==nombre_coule2:
     print("coulé")
 elif coule_user1==nombre_coule1:
@@ -160,3 +162,30 @@ elif coule_user2==nombre_coule2:
     print("même colonne")
 else:
     print("ni sur la ligne, ni sur la colone")
+
+thistuple = ("apple", "banana", "cherry", "cool", "fruit")
+print(thistuple[1])
+print(thistuple[-2])
+print(thistuple[2:5])
+x = ("apple", "banana", "cherry")
+y = list(x)
+y[1] = "kiwi"
+x = tuple(y)
+print(x) 
+for x in thistuple:
+    print(x) 
+print(len(thistuple)) 
+
+nombre2=int(3)
+position1=int(0)
+my_tuple=(3, 1, 4, 1, 5, 9, 2)
+def position (a, b, c):
+    y=list(c)
+    y.insert(b, a)
+    c=tuple(y)
+    return c
+print("mon premier truc :", position(nombre2, position1, my_tuple))
+
+def copie_tuple (t):
+    
+    return t
