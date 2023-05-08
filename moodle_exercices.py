@@ -189,3 +189,105 @@ print("mon premier truc :", position(nombre2, position1, my_tuple))
 def copie_tuple (t):
     
     return t
+
+print("show liste")
+liste1=[1,2,3,4,5]
+for i in range(5):  #for i in range va de 0 à range-1 ici 4
+    print(liste1[i])
+
+prenom = "JeAn"
+nom = "DuRaNt"
+age = 21
+print("Je m'appelle {0} {1} et j'ai {2} ans.".format(prenom.lower(), nom.upper(), age))
+print("Je m'appelle {} {} et j'ai {} ans.".format(prenom, nom, age))
+
+prenom = "Jean"
+message = "Bonjour"
+age = 21
+chaine_complete = message + " " + prenom + " tu as " + str(age) # On utilise le symbole '+' pour concaténer deux chaînes
+print(chaine_complete)
+if 'J' in prenom :
+ print("Oui, 'J' est dans le prénom")
+
+chaine = "Salut !"
+print(chaine[0]) # Première lettre de la chaîne
+print(chaine[2]) # Troisième lettre de la chaîne
+print(chaine[-1]) # Dernière lettre de la chaîne 
+
+chaine = "Bonjour !"
+for i in chaine:
+ print(i)
+
+presentation = "BonjourBonsoir"
+print(presentation[0:7]) # On sélectionne les deux premières lettres : 'sa'
+print(presentation[7:len(presentation)]) # On sélectionne la chaîne sauf les deux 1ères lettres : 'lut'
+
+def nombre_de_voyelle(chaine):
+    i=0
+    b=0
+    while i<len(chaine):
+        if chaine[i] in "aeiouy":
+            b=b+1
+        i+=1
+    return b
+def position_de_la_lette_e(chaine):
+    i=0
+    b=""
+    while i<len(chaine):
+        if chaine[i] in "e":
+            b+=str(i+1)+":"
+        i+=1
+    return b
+chaine = str("ceci est une chaine")
+print("Il y a {} dans {} et la lettre e est situé en position {}".format(str(nombre_de_voyelle(str(chaine))), chaine, position_de_la_lette_e(chaine)))
+
+ma_liste_de_mots = [ 'Cosinus', 'Sinus', 'Tangente', 'Cotangente' ]
+ma_liste_de_mots.sort()
+print(ma_liste_de_mots)
+for i in range(len(ma_liste_de_mots)):
+    ma_liste_de_mots.insert(i,str(ma_liste_de_mots[i]+" hyperbolique"))
+    del ma_liste_de_mots[i+1]
+print(ma_liste_de_mots)
+
+ma_liste_de_mots= ["maths", "info", "python", "exposants", "alpha", "fonction", "parabole","equilateral", "orthogonal", "cercle", "isocèle" ]
+print(ma_liste_de_mots)
+del ma_liste_de_mots[len(ma_liste_de_mots)-1]
+print(ma_liste_de_mots)
+
+b=[]
+for i in ma_liste_de_mots:
+    if i[0] in "aeiouy":
+        b.append(i[0])
+    if i[len(i)-1] in "s":
+        b.append(i)
+print(b)
+ma_liste_de_6_caractères=[]
+ma_liste_de_mots = ['Jean', 'Maximilien', 'Brigitte', 'Sonia', 'Jean-Pierre', 'Sandra']
+for i in ma_liste_de_mots:
+    if len(i)<6:
+        ma_liste_de_6_caractères.append(i)
+for i in ma_liste_de_mots:
+    if i in ma_liste_de_6_caractères:
+        ma_liste_de_mots.remove(i)
+print(ma_liste_de_6_caractères)
+print(ma_liste_de_mots)
+
+voyelles = ['a', 'e', 'i', 'o', 'u', 'y']
+ma_liste_de_mots = ['Jean', 'Maximilien', 'Brigitte', 'Sonia', 'Jean-Pierre', 'Sandra']
+for i in ma_liste_de_mots:
+    b=0
+    for j in range(len(i)):
+        if i[j] in voyelles:
+            b+=1
+    print("{} ont été trouvées dans {}".format(b, i))
+
+chaine="fêter"
+def conjugaison_verbe_er(chaine):
+    chaine = chaine.replace("er", "")
+    print("Je {}e".format(chaine))
+    print("Tu {}es".format(chaine))
+    print("Il {}e".format(chaine))
+    print("Nous {}ons".format(chaine))
+    print("Vous {}ez".format(chaine))
+    print("Ils {}ent".format(chaine))
+conjugaison_verbe_er(chaine)
