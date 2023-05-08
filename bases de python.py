@@ -55,3 +55,18 @@ print("\n***\non importe la librairie random et on demande un nombre entier rand
 import random 
 print(random.randint(0,4))
     
+ma_liste = ['a', 'b', 'c','d']
+print("création d'une liste : {}".format(ma_liste))
+print("ces 3 codes font exactement la même chose :\n      ma_liste = ['a', 'b', 'c','d', 'e', 'f']\n      i = 0\n       while i < len(ma_liste):\n            print(ma_liste[i])\n            i+=1")
+i = 0 
+while i < len(ma_liste):
+ print(ma_liste[i])
+ i += 1
+
+print("Deuxième code : \n       for i in range(len(ma_liste)):\n            print(ma_liste[i])")
+for i in range(len(ma_liste)):
+    print(ma_liste[i])
+
+print("Troisième code : \n       for i in ma_liste:\n            print(i)")
+for i in ma_liste:
+    print(i)
