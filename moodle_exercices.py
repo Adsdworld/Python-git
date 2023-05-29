@@ -166,7 +166,7 @@ else:
 thistuple = ("apple", "banana", "cherry", "cool", "fruit")
 print(thistuple[1])
 print(thistuple[-2])
-print(thistuple[2:5])
+print(thistuple[2:4])
 x = ("apple", "banana", "cherry")
 y = list(x)
 y[1] = "kiwi"
@@ -291,3 +291,87 @@ def conjugaison_verbe_er(chaine):
     print("Vous {}ez".format(chaine))
     print("Ils {}ent".format(chaine))
 conjugaison_verbe_er(chaine)
+
+matValeurs=[[10,7,4,11,3],[0,-1,4,9,12],[8,-18,2,157,63]]
+print(type(matValeurs))
+print(matValeurs[0])
+print(matValeurs[1])
+print(matValeurs[0][0])
+print(matValeurs[0][1])
+
+matValeurs=[[10,7,4,11,3],[0,-1,4,9,12],[8,-18,2,157,63]]
+col3 = [] #liste vide
+for ligne in matValeurs :
+ print(ligne)
+ col3.append(ligne[2]) # ajouter le 3ème élément
+print("col3 : ",col3)
+
+def initMatVal(nb_ligne,nb_colonne,valeur):
+ #Création d’une matrice vide
+ matrice=[None] * nb_ligne
+ for i in range(nb_ligne):
+    matrice[i]=[None] * nb_colonne
+ #Initialisation de la matrice avec val
+ for i in range(nb_ligne):
+    for j in range (nb_colonne):
+        matrice[i][j]=valeur
+ return matrice
+
+print(initMatVal(5,5, 3))
+
+mat=[[10,2,3,12],[4,-5,60,-1],[7,80,9,11]]
+for i in mat[0]:
+    print(i)
+for i in mat[1]:
+    print(i)
+for i in mat[2]:
+    print(i)
+
+T = [[1,9,5],[2,18,4],[-8,0,-2]]
+somme=0
+for ligne in range(len(T)):
+    print(len(T))
+    for element in range(len(T[ligne])):
+        somme+=T[ligne][element]
+print(somme)
+
+T = [[1,9,5],[2,18,4]]
+max=0
+for ligne in range(len(T)):
+    for element in range(len(T[ligne])):
+        if max<T[ligne][element]:
+            max=T[ligne][element]
+print(max)
+
+mon_dictionnaire = {}
+mon_dictionnaire["pseudo"] = "Jean"
+mon_dictionnaire["date"] = 12
+mon_dictionnaire["mot de passe"] = "***"
+print(mon_dictionnaire)
+mon_dictionnaire["mot de passe"]
+print(mon_dictionnaire)
+del mon_dictionnaire["date"] 
+print(mon_dictionnaire)
+print(mon_dictionnaire.pop("pseudo"))
+
+fruits = {"pommes":21, "melons":3, "poires":31}
+for cle in fruits:
+ print(cle) 
+for cle in fruits.keys():
+ print(cle) 
+for valeur in fruits.values():
+ print(valeur)
+if 21 in fruits.values():
+ print("Un des fruits se trouve dans la quantité 21.") 
+
+ d = {'nom': 'Dupuis', 'prenom': 'Jacque', 'age': 30}
+def ChangeNomByPrenom(dico):
+    dico=d
+    nom=dico["nom"]
+    prenom=dico["prenom"]
+    del dico["nom"]
+    del dico["prenom"]
+    dico["nom"]=nom
+    dico["prenom"]=prenom
+ChangeNomByPrenom(d)
+print(d)
