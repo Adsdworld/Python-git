@@ -240,7 +240,7 @@ def print_q_dict(q_dict):
 
 
 
-if __name__ == "__main__":
+"""if __name__ == "__main__":
     # clear the console screen
     if os.name == 'nt':
         os.system('cls')
@@ -265,3 +265,4 @@ if __name__ == "__main__":
         play_against_human2(Agent(), player)
         print("Partie terminé")
 
+"""
