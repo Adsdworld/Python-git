@@ -1,3 +1,5 @@
+#non fonctionnel
+
 dictionnaire={1:"bonjour"}
 
 print(dictionnaire)
@@ -30,11 +32,11 @@ def pendu(mot):
         for i in range(len(mot)):
             if (i+1) in positions:
                 mot_à_deviner=mot_à_deviner+lettre
-            else:
+            elif (i==0):
                 mot_à_deviner=mot_à_deviner+"-"
         mot_à_deviner = mot_à_deviner+fin_du_mot
         print(mot_à_deviner)
-        if not "-" in mot:
+        if not "-" in mot_à_deviner:
             print("Le mot à été deviné")
             stop1=False
     

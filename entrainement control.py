@@ -156,7 +156,7 @@ from math import sqrt
 
 
 
-# En bonus un devine nombre, qui pourrait tomber à l'exament:
+# En bonus un devine nombre, qui pourrait tomber à l'examen:
 import random
 
 def devine_nombre():
