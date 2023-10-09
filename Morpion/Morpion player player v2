@@ -1,0 +1,117 @@
+def print_board(board):
+    print("-------------\n| " + board[0] + " | " + board[1] + " | " + board[2] + " |\n-------------\n| " + board[3] + " | " + board[4] + " | " + board[5] + " |\n-------------\n| " + board[6] + " | " + board[7] + " | " + board[8] + " |\n-------------")
+
+
+def afficher_les_règles():
+    choice = input("Voulez vous afficher les règles? laisser vide pour quitter")
+    if choice != "":
+        print("Bienvenue. Vous allez jouer à \"Morpion\" !\n*** Règles : ***\nAligné 3 symboles pour gagner\n*** A vous de jouer ***")
+
+def print_joueur_data(data,player): #permet d'afficher les objets possédés par un joueur
+    for keys in data:
+        if player in keys:
+            print("\t{}: {}".format(keys, data[keys]))
+
+def check_win(board): # vérifie si quelqu'un à gagné
+    for i in range(0, 9, 3):
+        if board[i] == board[i+1] == board[i+2] != " ":
+            return board[i]
+    for i in range(3):
+        if board[i] == board[i+3] == board[i+6] != " ":
+            return board[i]
+    if board[0] == board[4] == board[8] != " ":
+        return board[0]
+    if board[2] == board[4] == board[6] != " ":
+        return board[2]
+    return "N"
+
+
+board = [" "]*9
+same_players=False
+joueur = 'X'
+from random import randint
+player_list=[]
+data = {}
+rejouer=True
+while rejouer:
+    while True:
+        print("Bienvenue. Vous allez jouer à \"Morpion\" !")
+        afficher_les_règles()
+        
+        if same_players==False:
+            while True:
+                player_list=[]
+                for i in range(2):
+                    i+=1
+                    choice = input("Joueur {}, choississez un nom".format(i))
+                    player_list.append(choice)
+                break
+            data = {}
+            for players in player_list: #ajouter les objets/informations des joueurs dans un dictionnaire utilisé comme base de données
+                data[players+'victory'] = 0
+                data[players+'match null'] = 0
+                data[players+'defeat'] = 0
+                data[players+'have started'] = 'None'
+        break
+    gagne = False
+    
+    if (data[player_list[0]+'have started'] and data[player_list[0]+'have started'])=='None':
+        if randint(0,1)==0:
+            data[player_list[0]+'have started']=='X'
+        else:
+            data[player_list[1]+'have started']=='O'
+    else:
+        if data[player_list[1]+'have started']=='X':
+            data[player_list[0]+'have started']=='X'
+            data[player_list[1]+'have started']=='O'
+            joueur='X'
+        else:
+            data[player_list[0]+'have started']=='O'
+            data[player_list[1]+'have started']=='X'
+            joueur='O'
+
+    while not gagne:
+        # Afficher le tableau de jeu actuel.
+        print_board(board)
+
+        # Demander au joueur courant de choisir une case.
+        position=int(input("choississez une position entre 1 et 9"))-1
+            #ligne = int(input("Joueur " + joueur + ", choisissez une ligne (0-2): "))
+            #colonne = int(input("Joueur " + joueur + ", choisissez une colonne (0-2): "))
+
+        # Vérifier que la case choisie est vide.
+        if board[position] != " ":
+            print("Cette case est déjà occupée. Choisissez une autre case.")
+            continue
+
+        # Placer le symbole du joueur sur la case choisie.
+        board[position]=joueur
+
+        # Vérifier si le joueur a gagné.
+        if joueur == check_win(board):
+            if data[player_list[0]+'have started']==joueur:
+                print("{} à gagné".format(player_list[0]))
+                data[player_list[0]+'victory']+=1
+            else:
+                print("{} à gagné".format(player_list[1]))
+                data[player_list[1]+'victory']+=1
+        if 'N'==check_win(board):
+            print("Match null")
+            data[player_list[0]+'match null']+=1
+            data[player_list[1]+'match null']+=1
+        # Passer au joueur suivant.
+        if joueur == 'X':
+            joueur = 'O'
+        else:
+            joueur = 'X'
+
+
+    choice = input("Voulez vous rejouer? laisser vide pour quitter")
+    if choice == "":
+        rejouer = False
+    else:
+        choice = input("Rejouer avec les mêmes joueurs? laisser vide pour rejouer avec les mêmes joueurs")
+        if choice == "":
+            same_players = True
+        else:
+            same_players=False
