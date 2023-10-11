@@ -62,3 +62,5 @@ def ask_while_try_exept_revenir_en_arrière():
                 raise Exception("Vous devez choisir entre 'o' ou 'n'")
         except Exception as err:
             print(err)
+
+print("".join(reversed("Boujour")))
