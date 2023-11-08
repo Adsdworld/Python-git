@@ -1,0 +1,14 @@
+Egypte;104300000
+Cuba;11320000
+Bolivie;11830000
+Burkina Faso;21500000
+Indonesie;276400000
+Malaisie;32780000
+Niger;25130000
+Inde;1393000000000
+Koweit;4329000
+Luxembourg;639070
+Mexique;130300000
+Arabie Saoudite;35340000
+Islande;372295
+Liban;6769000 

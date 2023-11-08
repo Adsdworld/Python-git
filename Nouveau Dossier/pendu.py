@@ -123,10 +123,6 @@ while True:
   ListeSolution=[]
 
 
-
-
-
-
   # A faire : Afficher la nouvelle chaine "_" + lettres trouvées
   # A faire : Sinon, afficher le pendu (en fonction du nombre de tentatives restantes)
 
