@@ -1,0 +1,12 @@
+Identifiant;nom;caractéristiques;volume;prix;categorie;quantité stock
+123;café corsé;Ethiopie;500g;2,50;petit déjeuner;50
+352;pate à tartiner;noisettes bio;250g;4,30;petit déjeuner;21
+365;coquillettes;bio;1kg;2;repas;34
+1001;pizza;chorizo;500g;2;repas;10
+13;pizza;chorizo;500g;2;repas;10
+1001;pizza;chorizo;500g;2;repas;10
+20;pizza;chorizo;500g;2;repas;10
+1001;pizza;chorizo;500g;2;repas;10
+13;pizza;chorizo;500g;2;repas;10
+1001;pizza;chorizo;500g;2;repas;10
+20;pizza;chorizo;500g;2;repas;10
