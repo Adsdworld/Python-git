@@ -1,0 +1,25 @@
+Identifiant de commande;Identifiant client;Liste de produits (identifiant produit + quantité);Prix;Frais de livraison;Etat
+1;8;['123', '1'];2;2;15;en cours de validation
+2;8;['123', '1'];2;2;15;en cours de validation
+3;8;['123', '2'];4;2;15;en cours de validation
+4;8;['365', '2'];4;2;15;en cours de validation
+5;8;['123', '1'];2;2;15;en cours de validation
+6;8;['352', '2'];8.6;4.3;15;en cours de validation
+7;8;['352', '1'];4.3;4.3;15;en cours de validation
+8;8;['352', '1'];4.3;4.3;15;en cours de validation
+9;8;['352', '1'];4.3;4.3;15;en cours de validation
+10;8;['352', '1'];4.3;4.3;15;en cours de validation
+11;8;['352', '1'];4.3;4.3;15;en cours de validation
+12;8;['352', '1'];4.3;4.3;15;en cours de validation
+13;8;['352', '1'];4.3;4.3;15;en cours de validation
+14;8;['352', '1'];4.3;4.3;15;en cours de validation
+15;8;['352', '1'];4.3;4.3;15;en cours de validation
+16;8;['352', '1'];4.3;4.3;15;en cours de validation
+17;8;['352', '1'];4.3;4.3;15;en cours de validation
+18;8;['352', '1'];4.3;4.3;15;à livrer
+19;8;['123', '10'];20.0;2;15;en cours de validation
+20;11;['352', '10'];43.0;4.3;15;en cours de validation
+21;11;['1001', '10'];20.0;2;15;en cours de validation
+22;11;['999', '100'];120.0;1.2;17;en cours de validation
+23;11;['178662', '1'];1.01;1.01;15;en cours de validation
+24;11;['6182172', '1'];9.95;9.95;15;en cours de validation

@@ -9,4 +9,6 @@ Identifiant;Nom;Pr�nom;Adresse;Date de Naissance;Adresse mail;Login;Mot de Pas
 8;Rafino;Thierry;ici;02/02/2000;rafinotiti@gmail.com;rafifi;1234;False
 9;LesZamis;Sarah;l� bas;01/01/1965;zazamis@gmail.com;zaza65;9874;False
 10;Surfi;Riton;ailleurs;23/12/1983;RitonSurfi@gmail.com;Ritonton;1478;False
-11;s;s;s;29/07/2004;arthur.@reseau.eseo.fr;ad;1234;False
+11;Arthur;de sallier dupin;38 bd;29/07/2004;AHVZ@dkn.com;art;mot;False
+12;baptiqte;a;aa;29/08/2000;BAKB@SKND.ks;b;mot;False
+13;Maxime;fillastre;toujours ailleurs;28/09/2004;example.s@zjs.com;maX;mot;False

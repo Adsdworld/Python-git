@@ -1,10 +1,6 @@
-# chanmps d'enregistrements
-
-#Menu personnel
-
-# menu client 
-# recevoir les diff catégories
-# afficher les produits de la catégories séléctionné
+# variables global to have access to user data
+#modifier la manière d'ajouter dans compe, essayer de vider puis voir si ça remplit correctement
+#check pas .. in email
 
 
 #Les Délices d’Angers
@@ -26,6 +22,10 @@ def ask_while_try_exept(type, ctx, ctx_err):
         try:
             if type=="str":
                 choice=input(ctx)
+            elif type == "none":
+                choice=input(ctx)
+                if "none" in choice.lower():
+                    return None
             else:
                 raise Exception("type unknow, please choose between 'int' or 'str'")
             return choice
@@ -34,26 +34,33 @@ def ask_while_try_exept(type, ctx, ctx_err):
         except Exception as err:
             print(err)
 
-
 import os
 os.system('cls')
 
 def acceuil():
-    #while True:
+    while True:
         os.system('cls')
-        print("Bienvenue dans notre magasin")
+        print("*** Bienvenue sur le site \"Les délices d'Angers\" ***\nNotre site vous propose des porduits locaux et de qualité,\nBonne visite !\n")
         while True:
             try:
-                choice=input("Avez vous un compte Oui 'o' | Non 'n'")
+                choice=input("Avez vous un compte Oui 'o' | Non 'n'").strip()
                 if choice.lower()=='n':
-                    if createaccount() == False:
+                    var =createaccount()
+                    if var == False:
                         print("Abandon de la création du compte")
+                    else:
+                        print("Compte cré avec succès,\n")
                 if choice.lower()=='o':
                     break
             except:
                 print("Une erreur est survenue, veuillez réessayer")
-        if login()==True:
-            catalogue()
+        user= login()
+        if user != False:
+            if "True" in user[8]:
+                Personnel(user)
+            else:
+                Catalogue(user)
+        sleep(3)
 
 def createaccount():
     stringbuilder=GetLastCompteid()+";"
@@ -77,7 +84,16 @@ def createaccount():
         temp4=[]
         for caractères in temp3[1]:
              temp4.append(caractères)
+        temp7=""
+        for caractères in temp3[0]:
+             temp7+=caractères
+        if ".." in temp7:
+                print("Email format can't be example'..'example@example.exemple ")
+                return False
         if "." in temp4:
+            if ".." in temp4:
+                print("Email format can't be example@example'..'exemple ")
+                return False
             if temp4[0] == ".":
                 print("Email format can't be '@.' email must contain at least on caracter between '@' and '.'")
                 return False
@@ -110,53 +126,204 @@ def login ():
     Comptes=[]
     for ligne in lignes:
         Comptes.append(ligne.split(";"))
-    print("***Veuillez vous connecter***")
-    id=input("\t***Entrer votre adresse login: ")
-    mdp=input("\t***Entrer votre mot de passe: ")
+    print("***Connection à votre compte***")
+    id=input("\t***Saisissez votre login: ").strip()
+    
     for i in range(len(Comptes)-1):
         if Comptes[i+1][6]==id:
-            if Comptes[i+1][7]==mdp:
-                print("Connecté avec succès, bonjour {}".format(Comptes[i+1][1]))
-                if Comptes[i+1][8]==True:
-                    Personnel()
+            for j in range(0,3):
+                print("Tentative {}/3".format(j))
+                mdp=input("\t***Saisissez votre mot de passe: ")
+                if Comptes[i+1][7]==mdp:
+                    print("Connecté avec succès, bonjour {} {}".format(Comptes[i+1][2],Comptes[i+1][1]))
+                    return Comptes[i+1]
                 else:
-                    Catalogue()
-
-                return True
-            else:
-                print("Mauvais mot de passe :/ ")
-                
-        else:
-            print("Identifiant introuvable dans la base de données: :/ ")
+                    print("Mauvais mot de passe :/ ")
+            print("Trop de tentatives")
+    print("Identifiant introuvable dans la base de données: ou mot de passe incorrect :/ ")
     return False
         
-def Catalogue():
-    print("bienvenue dans notre catalogue")
-    None
-def Personnel():
+def Catalogue(user):
     while True:
-        choice = ask_while_try_exept("str", "'1' pour ajouter un produit\n '2' pour modifier un produit\n'3' pour afficher les commandes en cours\n4 pour se déconnecter\n'5' pour afficher les stocks")
+        print("Bienvenue dans notre catalogue,\nQuelle catégorie de produit recherchez-vous? ")
+        Catégories=[]
+        for i in getProduits():
+            if not i[5] in Catégories:
+                Catégories.append(i[5])
+        for j in range(1, len(Catégories)):
+            print("'{}' {}".format(j, Catégories[j]))
+        catégorie=Getcatégorie(Catégories)
+        print("Catégorie séléctionné: {}".format(catégorie))
+        MathingProduits=[]
+        Produits = getProduits()
+        for j in range(len(Produits)):
+            if Produits[j][5]==catégorie:
+                MathingProduits.append(Produits[j])
+        for j in range(len(MathingProduits)):
+            print("'{}' ({}) {}: {}€ \n{}, {}".format(j, (MathingProduits[j][-1]).strip(), MathingProduits[j][1], MathingProduits[j][4], MathingProduits[j][3], MathingProduits[j][2]))
+        #while True:
+        stop=True
+        while stop:
+            choice=ask_while_try_exept("str", "Choisissez à l'aide de l'identifiant: ", "veuillez réessayer")
+            for j in range(len(MathingProduits)):
+                if str(j).strip()==choice:
+                    OrderProduit(MathingProduits[j], user)
+                    stop=False
+                    break
+            if stop == True:
+                print("Une erreur est survenue dans la saisie de l'identifiant, veuillez reessayer ")
+        while True:
+            try:
+                choice=input("Souhaitez vous continuer à commander Oui 'o' | Non 'n'")
+                if choice.lower()=='n':
+                    GetCommandesByUser(user)
+                    print("Déconnection")
+                    return
+                if choice.lower()=='o':
+                    break
+            except:
+                print("Une erreur est survenue, veuillez réessayer")
+    return
+def Getcatégorie(Catégories):
+    choice = ask_while_try_exept("str", "choisir une catégorie en rentrant son numéro: ", "veuillez réessayer")
+    for j in range(len(Catégories)):
+        if choice==str(j):
+            return Catégories[j]
+    return Getcatégorie(Catégories)
+
+def OrderProduit(produit, user):
+    if int(produit[-1]) <= 5:
+        print("Stock limité: {}".format(produit[-1]))
+    while True:
+        try:
+            while True:
+                quantité=int(input("Quel quantité ? "))
+                if quantité <= int(produit[-1]):
+                    stringbuilder=GetLastCommandeid()+";"+user[0]+";"+str([produit[0], str(quantité)])+";"+str(float(produit[4])*quantité)+";"+produit[4]+";"+frais_livraison(float(produit[4])*quantité, 10)+";"+"en cours de validation"
+                    with open ("Commandes.txt", "a",encoding='utf-8') as WindowsFile:
+                            WindowsFile.write("{}\n".format(stringbuilder))
+                            print("Commande de {} {} en cours de traitement par nos équipes".format(str(quantité), produit[1]))
+                            return
+                else:
+                    print("Malheuresement nous n'avons pas suffisament de stock")
+                    while True:
+                        try:
+                            choice=input("Souhaitez vous continuer en saisissant une nouvelle quantité Oui 'o' | Non 'n'")
+                            if choice.lower()=='n':
+                                if createaccount() == False:
+                                    print("Abandon de la commande")
+                                    return
+                            if choice.lower()=='o':
+                                break
+                        except:
+                            print("Une erreur est survenue, veuillez réessayer")
+        except:
+            print("veuillez reessayer")
+    
+def GetCommandesByUser(user):
+    Commandes = GetCommandes()
+    UserCommandes = []
+    for j in Commandes:
+        if j[1]==user[0]:
+            UserCommandes.append(j)
+    print("Commandes en cours: {} ".format(len(UserCommandes)))
+    for j in range(len(UserCommandes)):
+        try:
+            import ast
+            ma_liste = ast.literal_eval(UserCommandes[j][2])
+        except:
+            print("impossible de convertir la string fournit en list")
+        print("{} {} {}".format( ma_liste[1], GetProduitById(ma_liste[0]), UserCommandes[j][-1]))
+    input("Presser entrer pour continuer")
+    return
+
+def GetCommandes():
+    WindowsFile=open("Commandes.txt", "r", encoding='utf-8')
+    lignes=WindowsFile.readlines()
+    Produits=[]
+    for ligne in lignes:
+        Produits.append(ligne.split(";"))
+    return Produits
+
+def frais_livraison(montant, poids):   
+    frais_livraison=float(0)     
+    if montant <= 20 :
+        if poids <= 5 :
+            frais_livraison = 5
+        
+        if poids > 5 :
+            frais_livraison = 7
+    if montant <= 50 :
+        if poids <= 7 :
+            frais_livraison = 10
+        
+        if poids > 7 :
+            frais_livraison = 12
+    if montant <= 100 :
+        if poids <= 10 :
+            frais_livraison = 15
+        
+        if poids > 10 :
+            frais_livraison = 18
+    if montant > 100 :
+        if poids <= 20 :
+            frais_livraison = 17
+        
+        if poids > 20 :
+            frais_livraison = 20
+    
+    return str(frais_livraison)
+
+def GetProduitById(id):
+    Produits = getProduits()
+    for j in Produits:
+        if j[0]==id:
+            return j[1]
+    return "Le produit n'existe plus"
+
+def Personnel(user):
+    print("bienvenue dans votre espace personnel")
+    while True:
+        choice = ask_while_try_exept("str", "'1' pour ajouter un produit\n'2' pour modifier un produit\n'3' pour afficher les commandes en cours\n'4' pour afficher les stocks\n'5' pour se déconnecter\nchoix: ", "veuillez réessayer")
         if choice == "1":
-            None
-        if choice == "2":
-            None
-        if choice == "3":
-            None
-        if choice == "4":
-            None
-        if choice == "5":
-            getProduits()
-        
-        
-        AddProduits("12", "pizza", "chorizo", "500g", "2", "repas", "10")
-        sleep(10)
-        UpadteProduitsWithID("1000", "1001", None, None, None, None, None, None)
-        sleep(10)
-        AddProduits("13", "pizza", "chorizo", "500g", "2", "repas", "10")
-        sleep(10)
-        UpadteProduitsWithID("12", "1001", None, None, None, None, None, None)
-        sleep(10)
-        AddProduits("20", "pizza", "chorizo", "500g", "2", "repas", "10")
+            id = ask_while_try_exept("str", "identifiant du produit: ", "veuillez réessayer")
+            nom = ask_while_try_exept("str", "nom du produit: ", "veuillez réessayer")
+            caractéristiques = ask_while_try_exept("str", "caractéristiques du produit: ", "veuillez réessayer")
+            volume = ask_while_try_exept("str", "poids du produit: ", "veuillez réessayer")
+            prix = ask_while_try_exept("str", "prix du produit: ", "veuillez réessayer")
+            categorie = ask_while_try_exept("str", "categorie du produit: ", "veuillez réessayer")
+            quantite = ask_while_try_exept("str", "quantité du produit: ", "veuillez réessayer")
+            AddProduits(id, nom, caractéristiques, volume, prix, categorie, quantite)
+        elif choice == "2":
+            id = ask_while_try_exept("str", "identifiant du produit à modifié: ", "veuillez réessayer")
+            new_id = ask_while_try_exept("none", "(Enter 'None' to keep current value) Nouvel identifiant du produit: ", "veuillez réessayer")
+            nom = ask_while_try_exept("none", "(Enter 'None' to keep current value) nom du produit: ", "veuillez réessayer")
+            caractéristiques = ask_while_try_exept("none", "(Enter 'None' to keep current value) caractéristiques du produit: ", "veuillez réessayer")
+            volume = ask_while_try_exept("none", "(Enter 'None' to keep current value) poids du produit: ", "veuillez réessayer")
+            prix = ask_while_try_exept("none", "(Enter 'None' to keep current value) prix du produit: ", "veuillez réessayer")
+            categorie = ask_while_try_exept("none", "(Enter 'None' to keep current value) categorie du produit: ", "veuillez réessayer")
+            quantite = ask_while_try_exept("none", "(Enter 'None' to keep current value) quantité du produit: ", "veuillez réessayer")
+            UpadteProduitsWithID(id, new_id, nom, caractéristiques, volume, prix, categorie, quantite)
+        elif choice == "3":
+            Commandes=GetCommandes()
+            for j in range (len(Commandes)):
+                print(Commandes[j])
+            while True:
+                try:
+                    choice=input("Souhaitez vous modifier le status d'une commande? Oui 'o' | Non 'n'")
+                    if choice.lower()=='n':
+                        break
+                    if choice.lower()=='o':
+                        EditCommandStatus()
+                except:
+                    print("Une erreur est survenue, veuillez réessayer")
+
+        elif choice == "4":
+            for ligne in getProduits():
+                print(ligne)
+        elif choice == "5":
+            print("Aurevoir {}".format(user[2]))
+            return
 
 def getProduits():
     WindowsFile=open("Produits.txt", "r", encoding='utf-8')
@@ -164,8 +331,45 @@ def getProduits():
     Produits=[]
     for ligne in lignes:
         Produits.append(ligne.split(";"))
-    #print(Produits)
     return Produits
+
+def EditCommandStatus():
+    Commandes = GetCommandes()
+    print('')
+    os.system('cls')
+    for j in range(len(Commandes)):
+        print("'{}' {}".format(j, Commandes[j]))
+    stop = True
+    while stop:
+        choice = ask_while_try_exept("str", "choisir une commande en rentrant son numéro: ", "veuillez réessayer")
+        for j in range(len(Commandes)):
+            if choice.strip()==str(j).strip():
+                stop=False
+                edit(choice)
+        if stop == True:
+            print("Identifiant non-trouvé reessayer avec un identifiant valide")
+    
+def edit(choice):
+    new_status=ask_while_try_exept("str", "Entrer le nouveau status: ", "veuillez réessayer")
+    newCommandes = GetCommandes()
+    for i in range (len(newCommandes)):
+        if newCommandes[i][0] == choice:
+            newCommandes[i][-1]=new_status.strip()
+        else:
+            newCommandes[i][-1]=newCommandes[i][-1].strip()
+    for i in newCommandes:
+        print(i)
+    input("pause")
+    Stringbuilder=""
+    for i in newCommandes:
+        for j in i:
+            if j == i[-1]:
+                Stringbuilder+=j
+            else:
+                Stringbuilder+=j+";"
+        Stringbuilder+="\n"
+    with open ("Commandes.txt", "w",encoding='utf-8') as WindowsFile:
+            WindowsFile.write("{}".format(Stringbuilder))
 
 def UpadteProduitsWithID(Identifiant, NouvelIdentifiant,nom,caractéristiques,volume,prix,categorie,quantité ):
     newProduits=getProduits()
@@ -214,9 +418,7 @@ def AddProduits(Identifiant,nom,caractéristiques,volume,prix,categorie,quantit�
 
 def getUpdatedProduitWithId(newProduits, Identifiant):
     for i in range(len(newProduits)):
-        #print(newProduits[i][0])
         if newProduits[i][0]==Identifiant:
-            #print(newProduits[i])
             return newProduits[i], i
     return None
     
@@ -235,8 +437,17 @@ def GetLastCompteid():
     Comptes=[]
     for ligne in lignes:
         Comptes.append(ligne.split(";"))
-    #print(Comptes[-1])
     return str(int(Comptes[-1][0])+1)
+def GetLastCommandeid():
+    WindowsFile=open("Commandes.txt", "r")
+    lignes=WindowsFile.readlines()
+    Comptes=[]
+    for ligne in lignes:
+        Comptes.append(ligne.split(";"))
+    if Comptes[-1][0] == "Identifiant de commande":
+        return "1"
+    else:
+        return str(int(Comptes[-1][0])+1)
 
 
 acceuil()
