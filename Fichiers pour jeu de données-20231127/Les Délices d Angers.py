@@ -33,6 +33,50 @@ def ask_while_try_exept(type, ctx, ctx_err):
             print(ctx_err)
         except Exception as err:
             print(err)
+            
+def RécupérerFichier(name):
+    WindowsFile=open(name, "r", encoding='utf-8')
+    lignes=WindowsFile.readlines()
+    Liste=[]
+    for chaines in lignes:
+        Liste.append(chaines.strip().split(";"))
+    WindowsFile.close()
+    return Liste
+
+def AfficherListe(Liste):
+    for i in Liste:
+        print(i)
+
+def ModifierListe(File_name, Liste, position_int, valeur_str, nouvelle_position,nouvelle_valeur_str):
+    for i in range (len(Liste)):
+        if Liste[i][position_int] == valeur_str:
+            Liste[i][nouvelle_position]=nouvelle_valeur_str.strip() #Modifie la valeur
+        else:
+            Liste[i][nouvelle_position]=Liste[i][nouvelle_position].strip() #Garde inchangé
+    Stringbuilder=""
+    for i in Liste:
+        for j in i:
+            if j == i[-1]:
+                Stringbuilder+=j
+            else:
+                Stringbuilder+=j+";"
+        Stringbuilder+="\n"
+    with open (File_name, "w",encoding='utf-8') as WindowsFile:
+        WindowsFile.write("{}".format(Stringbuilder))
+        WindowsFile.close()
+
+def EcrireListe(File_name, Liste):
+    Stringbuilder=""
+    for i in Liste:
+        for j in i:
+            if j == i[-1]:
+                Stringbuilder+=j
+            else:
+                Stringbuilder+=j+";"
+        Stringbuilder+="\n"
+    with open (File_name, "w",encoding='utf-8') as WindowsFile:
+        WindowsFile.write("{}".format(Stringbuilder))
+        WindowsFile.close()
 
 import os
 os.system('cls')
@@ -147,7 +191,7 @@ def Catalogue(user):
     while True:
         print("Bienvenue dans notre catalogue,\nQuelle catégorie de produit recherchez-vous? ")
         Catégories=[]
-        for i in getProduits():
+        for i in RécupérerFichier("Produits.txt"):
             if not i[5] in Catégories:
                 Catégories.append(i[5])
         for j in range(1, len(Catégories)):
@@ -155,7 +199,7 @@ def Catalogue(user):
         catégorie=Getcatégorie(Catégories)
         print("Catégorie séléctionné: {}".format(catégorie))
         MathingProduits=[]
-        Produits = getProduits()
+        Produits = RécupérerFichier("Produits.txt")
         for j in range(len(Produits)):
             if Produits[j][5]==catégorie:
                 MathingProduits.append(Produits[j])
@@ -198,12 +242,18 @@ def OrderProduit(produit, user):
         try:
             while True:
                 quantité=int(input("Quel quantité ? "))
-                if quantité <= int(produit[-1]):
-                    stringbuilder=GetLastCommandeid()+";"+user[0]+";"+str([produit[0], str(quantité)])+";"+str(float(produit[4])*quantité)+";"+produit[4]+";"+frais_livraison(float(produit[4])*quantité, 10)+";"+"en cours de validation"
+                if quantité==0:
+                    print("Abandon de la commande de",produit[1])
+                    return
+                elif quantité <= int(produit[-1]):
+                    nouvelle_quantite=str(int(produit[-1])-quantité)
+                    ModifierListe("Produits.txt", RécupérerFichier("Produits.txt"), 0, produit[0], -1, nouvelle_quantite)
+                    stringbuilder=GetLastCommandeid()+";"+user[0]+";"+str([produit[0], str(quantité)])+";"+str(float(produit[4])*quantité)+";"+produit[4]+";"+frais_livraison(float(produit[4])*quantité, getPoids(produit))+";"+"en cours de validation"
                     with open ("Commandes.txt", "a",encoding='utf-8') as WindowsFile:
                             WindowsFile.write("{}\n".format(stringbuilder))
                             print("Commande de {} {} en cours de traitement par nos équipes".format(str(quantité), produit[1]))
                             return
+                
                 else:
                     print("Malheuresement nous n'avons pas suffisament de stock")
                     while True:
@@ -220,6 +270,19 @@ def OrderProduit(produit, user):
         except:
             print("veuillez reessayer")
     
+def getPoids(produit):
+    print("getting poids")
+    if "g" in produit[3].lower():
+        try:
+            return float(produit[3].lower().replace("g", ""))/1000
+        except:
+            print("Erreur dans la récupération du poids")
+    if "kg" in produit[3].lower():
+        try:
+            return float(produit[3].lower().replace("kg", ""))
+        except:
+            print("Erreur dans la récupération du poids")
+
 def GetCommandesByUser(user):
     Commandes = GetCommandes()
     UserCommandes = []
@@ -246,36 +309,40 @@ def GetCommandes():
     return Produits
 
 def frais_livraison(montant, poids):   
-    frais_livraison=float(0)     
+    print(montant, poids)    
     if montant <= 20 :
         if poids <= 5 :
             frais_livraison = 5
-        
+            return str(frais_livraison)
         if poids > 5 :
             frais_livraison = 7
+            return str(frais_livraison)
     if montant <= 50 :
         if poids <= 7 :
             frais_livraison = 10
-        
+            return str(frais_livraison)
         if poids > 7 :
             frais_livraison = 12
+            return str(frais_livraison)
     if montant <= 100 :
         if poids <= 10 :
             frais_livraison = 15
-        
+            return str(frais_livraison)
         if poids > 10 :
             frais_livraison = 18
+            return str(frais_livraison)
     if montant > 100 :
         if poids <= 20 :
             frais_livraison = 17
-        
+            return str(frais_livraison)
         if poids > 20 :
             frais_livraison = 20
+        return str(frais_livraison)
     
-    return str(frais_livraison)
+    
 
 def GetProduitById(id):
-    Produits = getProduits()
+    Produits = RécupérerFichier("Produits.txt")
     for j in Produits:
         if j[0]==id:
             return j[1]
@@ -284,7 +351,7 @@ def GetProduitById(id):
 def Personnel(user):
     print("bienvenue dans votre espace personnel")
     while True:
-        choice = ask_while_try_exept("str", "'1' pour ajouter un produit\n'2' pour modifier un produit\n'3' pour afficher les commandes en cours\n'4' pour afficher les stocks\n'5' pour se déconnecter\nchoix: ", "veuillez réessayer")
+        choice = ask_while_try_exept("str", "'1' pour ajouter un produit\n'2' pour modifier un produit\n'3' pour supprimer un produit\n'4' pour afficher les commandes en cours\n'5' pour afficher les stocks\n'6' pour se déconnecter\nchoix: ", "veuillez réessayer")
         if choice == "1":
             id = ask_while_try_exept("str", "identifiant du produit: ", "veuillez réessayer")
             nom = ask_while_try_exept("str", "nom du produit: ", "veuillez réessayer")
@@ -303,8 +370,20 @@ def Personnel(user):
             prix = ask_while_try_exept("none", "(Enter 'None' to keep current value) prix du produit: ", "veuillez réessayer")
             categorie = ask_while_try_exept("none", "(Enter 'None' to keep current value) categorie du produit: ", "veuillez réessayer")
             quantite = ask_while_try_exept("none", "(Enter 'None' to keep current value) quantité du produit: ", "veuillez réessayer")
-            UpadteProduitsWithID(id, new_id, nom, caractéristiques, volume, prix, categorie, quantite)
+            try:
+                UpadteProduitsWithID(id, new_id, nom, caractéristiques, volume, prix, categorie, quantite)
+            except:
+                None
         elif choice == "3":
+            id = ask_while_try_exept("str", "identifiant du produit à modifié: ", "veuillez réessayer")
+            Produits=RécupérerFichier("Produits.txt")
+            try:
+                produit_ligne, position = getUpdatedProduitWithId(Produits, id)
+                Produits.pop(position)
+                EcrireListe("Produits.txt", Produits)
+            except:
+                None
+        elif choice == "4":
             Commandes=GetCommandes()
             for j in range (len(Commandes)):
                 print(Commandes[j])
@@ -318,14 +397,16 @@ def Personnel(user):
                 except:
                     print("Une erreur est survenue, veuillez réessayer")
 
-        elif choice == "4":
-            for ligne in getProduits():
-                print(ligne)
         elif choice == "5":
-            print("Aurevoir {}".format(user[2]))
+            for ligne in RécupérerFichier("Produits.txt"):
+                print(ligne)
+        elif choice == "6":
+            print("A bientôt {}".format(user[2]))
             return
+        else:
+            print("Veuillez saisir un nombre")
 
-def getProduits():
+def bad(Produits):
     WindowsFile=open("Produits.txt", "r", encoding='utf-8')
     lignes=WindowsFile.readlines()
     Produits=[]
@@ -359,7 +440,6 @@ def edit(choice):
             newCommandes[i][-1]=newCommandes[i][-1].strip()
     for i in newCommandes:
         print(i)
-    input("pause")
     Stringbuilder=""
     for i in newCommandes:
         for j in i:
@@ -372,8 +452,11 @@ def edit(choice):
             WindowsFile.write("{}".format(Stringbuilder))
 
 def UpadteProduitsWithID(Identifiant, NouvelIdentifiant,nom,caractéristiques,volume,prix,categorie,quantité ):
-    newProduits=getProduits()
-    produit_ligne, position = getUpdatedProduitWithId(newProduits, Identifiant)
+    newProduits=RécupérerFichier("Produits.txt")
+    try:
+        produit_ligne, position = getUpdatedProduitWithId(newProduits, Identifiant)
+    except:
+        return
     newProduits.pop(position)
     print("Ligne mise à jour: ",produit_ligne)
     updateField = []
@@ -420,7 +503,8 @@ def getUpdatedProduitWithId(newProduits, Identifiant):
     for i in range(len(newProduits)):
         if newProduits[i][0]==Identifiant:
             return newProduits[i], i
-    return None
+    print("Identifiant non trouvé")
+    return "Identifiant non trouvé"
     
 def WriteListeInFile(Liste):
      StringBuilder=""

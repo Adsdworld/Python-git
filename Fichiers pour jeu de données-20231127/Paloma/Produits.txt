@@ -1,0 +1,4 @@
+Identifiant;nom;caractéristiques;volume;prix;categorie;quantité stock;numero
+123;café corsé;Ethiopie;500g;2,50;petit déjeuner;5;1
+352;pate à tartiner;noisettes bio;250g;4,30;petit déjeuner;21;2
+365;coquillettes;bio;1kg;2;repas;30;3
