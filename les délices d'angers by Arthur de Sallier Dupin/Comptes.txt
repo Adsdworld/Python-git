@@ -14,3 +14,4 @@ Identifiant;Nom;Pr�nom;Adresse;Date de Naissance;Adresse mail;Login;Mot de Pas
 13;Maxime;fillastre;toujours ailleurs;28/09/2004;example.s@zjs.com;maX;mot;False
 14;Arthur;de Sallier Dupin;chez moi;29/07/2004;arthur@eseo.com;art;mot;False
 15;Benjamin;Franklin;chez moi;29/07/2004;benjamin@benjamin.com;benji;mot;False
+16;BOSS;Patron;Les délices d'Angers;00/00/2000;boss.patron@lesdelicesdangers.com;moi;mot;False

@@ -16,14 +16,23 @@ from File import File
 import os
 import random
 import ctypes
-def change_color():
-    foreground_colors = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+import platform
+def is_windows():
+    return platform.system().lower() == 'windows'
+def roll():
+    foreground_colors = [0, 7, 8, 9, 10, 11, 12, 13, 14, 15]
     background_colors = [7, 8, 9, 10, 11, 12, 13, 14]
     foreground_color = random.choice(foreground_colors)
     background_color = random.choice(background_colors)
-    #print(background_color)
-    handle = ctypes.windll.kernel32.GetStdHandle(-11)
-    ctypes.windll.kernel32.SetConsoleTextAttribute(handle, foreground_color | (background_color << 4))
+    return foreground_color, background_color
+
+def change_color():
+    if is_windows():
+        foreground_color, background_color = roll()
+        if foreground_color==background_color:
+            return change_color()
+        handle = ctypes.windll.kernel32.GetStdHandle(-11)
+        ctypes.windll.kernel32.SetConsoleTextAttribute(handle, foreground_color | (background_color << 4))
 
 def ask_while_try_exept(type, ctx, ctx_err):
     while True:

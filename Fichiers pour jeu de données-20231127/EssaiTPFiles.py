@@ -7,6 +7,11 @@ fileCrepes = File(5)
 dicCrepes = {1:"crêpe sucre",2:"crêpe confiture",3:"crêpe nutella", 4:"crêpe chantilly"}
 dicGalettes = {1:"galette jambon",2:"galette andouillette",3:"galette complète",4:"galette raclette"}  
 
+maFile= File(999)
+maFile.ajouter("qksjnd")
+print(maFile)
+print(maFile.recupererPremier())
+
 while True :
     print("Bonjour, que souhaitez-vous commander ?")
     print("Du salé ou du sucré")

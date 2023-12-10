@@ -1,9 +1,10 @@
 Identifiant;nom;caractéristiques;volume;prix;categorie;quantité stock
 123;café corsé;Ethiopie;500g;2;petit déjeuner;50
 352;pate à tartiner;noisettes bio;250g;4.3;petit déjeuner;200
-365;coquillettes;bio;1kg;2;repas;90
+365;coquillettes;bio;1kg;2;repas;85
 1001;pizza;chorizo;500g;2;repas;99
-6182172;beurre;beurré;1000g;9.95;autres;100
+6182172;beurre;beurré;1000g;9.95;autres;90
 178662;sel;salé;10g;1.01;autres;9
 09283;python en conserve;protéines enrobés de peau écailleuse;10kg;0.01;repas;999990
 1;sucre;5% de sucre et 95% de sel;2.5kg;9.99;autres;999
+26;air;airée à la campagne;0g;100;petit déjeuner;900

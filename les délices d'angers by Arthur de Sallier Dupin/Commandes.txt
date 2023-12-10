@@ -73,3 +73,6 @@ Identifiant de commande;Identifiant client;Liste de produits (identifiant produi
 72;15;[('178662', 80, '1.01')];80.8;15;en cours de validation
 73;11;[('1001', 1, '2'), ('09283', 10, '0.01')];2.1;7;N'as pas dit aurevoir, le livrer l'année prochaine
 74;11;[('1', 1, '9.99'), ('178662', 1, '1.01')];11.0;5;en cours de validation
+75;11;[('6182172', 10, '9.95')];99.5;15;en cours de validation
+76;11;[('26', 100, '100')];10000.0;17;en cours de validation
+77;11;[('365', 5, '2')];10.0;5;en cours de validation
