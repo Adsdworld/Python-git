@@ -76,4 +76,3 @@ Identifiant de commande;Identifiant client;Liste de produits (identifiant produi
 75;11;[('6182172', 10, '9.95')];99.5;15;en cours de validation
 76;11;[('26', 100, '100')];10000.0;17;en cours de validation
 77;11;[('365', 5, '2')];10.0;5;en cours de validation
-78;11;[('1', 998, '9.99')];9970.02;20;en cours de validation
